@@ -1,0 +1,9 @@
+host = {
+    'host': 'ti-legacy.com',
+    'port': 5050,
+}
+
+user = {
+    'name': '',
+    'password': '',
+}
