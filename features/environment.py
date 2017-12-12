@@ -3,6 +3,13 @@ from telnetlib import Telnet
 import time
 
 
+def search_buffer(buffer, phrase):
+    if buffer.find(phrase) == -1:
+        return False
+    else:
+        return True
+
+
 class MudClient(Telnet):
     buffer = ''
 
@@ -34,6 +41,7 @@ class MudClient(Telnet):
         
 
 def before_scenario(context, scenario):
+    context.search_buffer = search_buffer
     context.config.setup_logging()
     context.connection = MudClient(**host)
     context.connection.login(**user)

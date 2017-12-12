@@ -1,13 +1,6 @@
 from behave import *
 
 
-def search_buffer(buffer, phrase):
-    if buffer.find(phrase) == -1:
-        return False
-    else:
-        return True
-
-
 @given('that we are in {location}')
 def step_impl(context, location):
     """
@@ -18,10 +11,11 @@ def step_impl(context, location):
     :type context: behave.runner.Context
     """
     prompt_location = 'Room name: %s' % location
-    if search_buffer(context.buffers['login'], prompt_location):
+    if context.search_buffer(context.buffers['login'], prompt_location):
         return True
     else:
-        while not search_buffer(context.connection.buffer, prompt_location):
+        while not context.search_buffer(context.connection.buffer,
+                                        prompt_location):
             context.connection.command_and_store('travel %s' % location)
             print(context.connection.buffer)
         return True
@@ -46,7 +40,7 @@ def step_impl(context, string):
     context.connection.get_and_clear_buffer()
     context.connection.command_and_store('inventory')
     inventory_list = context.connection.get_and_clear_buffer()
-    if not search_buffer(inventory_list, string):
+    if not context.search_buffer(inventory_list, string):
         print(inventory_list)
         assert False
 
