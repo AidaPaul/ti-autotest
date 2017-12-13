@@ -34,6 +34,13 @@ class MudClient(Telnet):
     def set_prompt(self):
         self.command_and_store('prompt Room name: %r')
 
+    def disable_color(self):
+        self.get_and_clear_buffer()
+        self.command_and_store('color')
+        result = self.get_and_clear_buffer()
+        if result.startswith('Colour is now ON'):
+            self.command_and_store('color')
+
     def __del__(self):
         self.command_and_store('quit')
         super(MudClient, self).__del__()
@@ -49,3 +56,4 @@ def before_scenario(context, scenario):
         'login': context.connection.get_and_clear_buffer()
     }
     context.connection.set_prompt()
+    context.connection.disable_color()
