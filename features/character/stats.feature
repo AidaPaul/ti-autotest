@@ -31,7 +31,6 @@ Feature: Character stats
       | 11    | Crippled        |
       | 12    | Dying           |
 
-  @wip
   Scenario: Combat command for healthy person
     Given a healthy character with no injuries
     When I invoke "combat" command
